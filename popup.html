@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Is it Base?</title>
+  <style>
+    /* ── Base44 design tokens ── */
+    :root {
+      --orange:    #FF5B1D;
+      --orange-lt: #FFF0EA;
+      --orange-md: #FFD6C2;
+      --bg:        #EDEBE7;
+      --bg-card:   #F5F3F0;
+      --bg-hover:  #E8E3DB;
+      --text:      #1A1A1A;
+      --text-mid:  #5A5A5A;
+      --text-soft: #9A9A9A;
+      --border:    #D8D4CE;
+      --green:     #1A7A45;
+      --green-lt:  #EAF5EF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 320px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px 13px;
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-sq {
+      width: 32px;
+      height: 32px;
+      background: var(--orange);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Base44-style "B" letter mark in white */
+    .logo-sq svg { display: block; }
+
+    .header-text h1 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.2px;
+    }
+
+    .header-text p {
+      font-size: 11px;
+      color: var(--text-soft);
+      margin-top: 1px;
+    }
+
+    /* ── URL bar ── */
+    .url-bar {
+      margin: 10px 14px 0;
+      font-size: 11px;
+      color: var(--text-soft);
+      background: var(--bg-hover);
+      border-radius: 6px;
+      padding: 6px 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border: 1px solid var(--border);
+    }
+
+    /* ── Verdict card ── */
+    .verdict {
+      margin: 10px 14px 0;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    .verdict.yes {
+      background: var(--orange-lt);
+      border-color: var(--orange-md);
+    }
+
+    .verdict.matched {
+      background: #FFF8F5;
+      border-color: #F0D8CE;
+    }
+
+    .verdict.no {
+      background: var(--bg-card);
+      border-color: var(--border);
+    }
+
+    .verdict-icon {
+      font-size: 28px;
+      margin-bottom: 7px;
+      display: block;
+      line-height: 1;
+    }
+
+    .verdict-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      line-height: 1.25;
+    }
+
+    .verdict.yes .verdict-title     { color: var(--orange); }
+    .verdict.matched .verdict-title { color: #C04010; }
+    .verdict.no .verdict-title      { color: var(--text-mid); }
+    .verdict.scanning .verdict-title{ color: var(--text-soft); }
+
+    .verdict-sub {
+      font-size: 12px;
+      margin-top: 5px;
+      color: var(--text-soft);
+    }
+
+    .verdict.yes .verdict-sub     { color: #C04010; }
+    .verdict.matched .verdict-sub { color: #A05030; }
+
+    .platform-pill {
+      display: inline-block;
+      margin-top: 8px;
+      background: var(--orange);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 20px;
+      padding: 3px 12px;
+    }
+
+    .verdict.matched .platform-pill {
+      background: #E8D0C4;
+      color: #7A3010;
+    }
+
+    /* ── Evidence list ── */
+    .evidence-section {
+      margin: 10px 14px 0;
+    }
+
+    .evidence-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-soft);
+      margin-bottom: 5px;
+    }
+
+    .evidence-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .evidence-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-size: 11.5px;
+      color: var(--text-mid);
+      background: var(--bg-hover);
+      border-radius: 6px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+    }
+
+    .evidence-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 4px;
+      background: var(--orange);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 10px 14px 14px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn-rescan {
+      background: var(--bg-card);
+      color: var(--text-mid);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 7px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.12s, border-color 0.12s;
+    }
+
+    .btn-rescan:hover {
+      background: var(--bg-hover);
+      border-color: #C0BAB2;
+    }
+
+    /* spinner */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      width: 24px; height: 24px;
+      border: 2.5px solid var(--border);
+      border-top-color: var(--orange);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      margin: 0 auto 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="icons/icon128.png" width="32" height="32" style="border-radius:8px;flex-shrink:0;" />
+    <div class="header-text">
+      <h1>Is it Base?</h1>
+      <p>Vibe-coding platform detector</p>
+    </div>
+  </div>
+
+  <div id="url-bar" class="url-bar"></div>
+
+  <div id="verdict" class="verdict scanning">
+    <div class="spinner"></div>
+    <div class="verdict-title">Scanning page…</div>
+    <div class="verdict-sub">Running detection</div>
+  </div>
+
+  <div id="evidence-section" class="evidence-section" style="display:none">
+    <div class="evidence-label">Evidence found</div>
+    <ul id="evidence-list" class="evidence-list"></ul>
+  </div>
+
+  <div class="footer">
+    <button class="btn-rescan" id="btn-rescan">Re-scan this page</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
